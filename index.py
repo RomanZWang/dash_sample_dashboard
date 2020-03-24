@@ -18,7 +18,7 @@ app.index_string = '''
 <html>
     <head>
         {%metas%}
-        <title>Firegem Demo</title>
+        <title>Fire Mountain Gem Cost Report</title>
         {%favicon%}
         {%css%}
     </head>
@@ -29,7 +29,6 @@ app.index_string = '''
             {%scripts%}
             {%renderer%}
         </footer>
-        <div>Firegem Demo</div>
     </body>
 </html>
 '''

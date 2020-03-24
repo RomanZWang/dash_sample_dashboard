@@ -13,7 +13,7 @@ def get_logo():
     logo = html.Div([
 
         html.Div([
-            html.Img(src='https://i.pinimg.com/564x/4a/bc/38/4abc38758eba60d6712bd86dd1542697.jpg', height='101', width='141')
+            html.Img(src='./assets/fgmodel.png', height='101', width='141')
         ], className="ten columns padded"),
 
         # html.Div([
@@ -29,7 +29,7 @@ def get_header():
 
         html.Div([
             html.H5(
-                'House Stark Performance Marketing Report')
+                'Fire Mountain Gems Cost Report')
         ], className="twelve columns padded")
 
     ], className="row gs-header gs-text-header")
