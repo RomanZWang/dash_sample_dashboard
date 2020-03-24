@@ -1,19 +1,19 @@
  .page {
-	  position: relative;
-	  width: 310mm;
-	  min-height: 793mm;
-	  padding: 0mm;
-	  margin: 10mm auto;
-	  /* border: 1px #D3D3D3 solid; */
-	  border-radius: 5px;
-	  background: white;
-	  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+      position: relative;
+      width: 310mm;
+      min-height: 793mm;
+      padding: 0mm;
+      margin: 10mm auto;
+      /* border: 1px #D3D3D3 solid; */
+      border-radius: 5px;
+      background: white;
+      /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
  }
  .subpage {
-	  padding: 1cm;
-	  border: 5px #ccc solid;
-	  height: 750mm;
-	  outline: 2cm whitesmoke solid;
+      padding: 1cm;
+      border: 5px #ccc solid;
+      height: 750mm;
+      outline: 2cm whitesmoke solid;
  }
 
 #datatable-paid-search > div > div > div.row.row-1 > div.cell.cell-1-0.dash-fixed-column {
@@ -80,8 +80,8 @@
 }
 
 /*#output-container-date-picker-range {
-	font-weight: bolder;
-	color: #3c3f40;
+    font-weight: bolder;
+    color: #3c3f40;
     margin-top: 7px;
     font-size: 12px;
     text-align: center;

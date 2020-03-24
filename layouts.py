@@ -11,51 +11,51 @@ import pandas as pd
 df = pd.read_csv('data/performance_analytics_cost_and_ga_metrics.csv')
 
 df.rename(columns={
- 'Travel Product': 'Placement type', 
-  'Spend - This Year': 'Spend TY', 
-  'Spend - Last Year': 'Spend LY', 
-  'Sessions - This Year': 'Sessions - TY',
-  'Sessions - Last Year': 'Sessions - LY',
-  'Bookings - This Year': 'Bookings - TY',
-  'Bookings - Last Year': 'Bookings - LY',
-  'Revenue - This Year': 'Revenue - TY',
-  'Revenue - Last Year': 'Revenue - LY',
+ 'Travel Product': 'Placement type',
+  'Spend - This Year': 'Spend_TY',
+  'Spend - Last Year': 'Spend_LY',
+  'Sessions - This Year': 'Sessions_TY',
+  'Sessions - Last Year': 'Sessions_LY',
+  'Bookings - This Year': 'Bookings_TY',
+  'Bookings - Last Year': 'Bookings_LY',
+  'Revenue - This Year': 'Revenue_TY',
+  'Revenue - Last Year': 'Revenue_LY',
   }, inplace=True)
 
 
 df['Date'] = pd.to_datetime(df['Date'])
 current_year = df['Year'].max()
 
-dt_columns = ['Placement type', 'Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', \
-                        'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)', \
-                        'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', \
-                        'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]
+dt_columns = ['Placement type', 'Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', \
+                        'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent', \
+                        'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', \
+                        'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]
 
 conditional_columns = ['Spend_PoP_abs_conditional', 'Spend_PoP_percent_conditional', 'Spend_YoY_percent_conditional',
-'Sessions_PoP_percent_conditional', 'Sessions_YoY_percent_conditional', 
+'Sessions_PoP_percent_conditional', 'Sessions_YoY_percent_conditional',
 'Bookings_PoP_abs_conditional', 'Bookings_YoY_abs_conditional', 'Bookings_PoP_percent_conditional', 'Bookings_YoY_percent_conditional',
 'Revenue_PoP_abs_conditional', 'Revenue_YoY_abs_conditional', 'Revenue_PoP_percent_conditional', 'Revenue_YoY_percent_conditional',]
 
-dt_columns_total = ['Placement type', 'Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', \
-                        'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)', \
-                        'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', \
-                        'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',
+dt_columns_total = ['Placement type', 'Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', \
+                        'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent', \
+                        'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', \
+                        'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',
                         'Spend_PoP_abs_conditional', 'Spend_PoP_percent_conditional', 'Spend_YoY_percent_conditional',
-'Sessions_PoP_percent_conditional', 'Sessions_YoY_percent_conditional', 
+'Sessions_PoP_percent_conditional', 'Sessions_YoY_percent_conditional',
 'Bookings_PoP_abs_conditional', 'Bookings_YoY_abs_conditional', 'Bookings_PoP_percent_conditional', 'Bookings_YoY_percent_conditional',
 'Revenue_PoP_abs_conditional', 'Revenue_YoY_abs_conditional', 'Revenue_PoP_percent_conditional', 'Revenue_YoY_percent_conditional',]
 
-df_columns_calculated = ['Placement type', 'CPS - TY', 
+df_columns_calculated = ['Placement type', 'CPS - TY',
                         'CPS - LP', 'CPS PoP (Abs)', 'CPS PoP (%)',
-                        'CPS - LY',  'CPS YoY (Abs)',  'CPS YoY (%)', 
-                        'CVR - TY', 
+                        'CPS - LY',  'CPS YoY (Abs)',  'CPS YoY (%)',
+                        'CVR - TY',
                         'CVR - LP', 'CVR PoP (Abs)', 'CVR PoP (%)',
                         'CVR - LY',  'CVR YoY (Abs)',  'CVR YoY (%)',
-                        'CPA - TY', 
+                        'CPA - TY',
                         'CPA - LP', 'CPA PoP (Abs)', 'CPA PoP (%)',
                         'CPA - LY', 'CPA YoY (Abs)',  'CPA YoY (%)']
 
-conditional_columns_calculated_calculated = ['CPS_PoP_abs_conditional', 'CPS_PoP_percent_conditional', 'CPS_YoY_abs_conditional', 'CPS_PoP_percent_conditional', 
+conditional_columns_calculated_calculated = ['CPS_PoP_abs_conditional', 'CPS_PoP_percent_conditional', 'CPS_YoY_abs_conditional', 'CPS_PoP_percent_conditional',
 'CVR_PoP_abs_conditional', 'CVR_PoP_percent_conditional', 'CVR_YoY_abs_conditional', 'CVR_YoY_percent_conditional',
 'CPA_PoP_abs_conditional', 'CPA_PoP_percent_conditional', 'CPA_YoY_abs_conditional', 'CPA_YoY_percent_conditional']
 
@@ -63,7 +63,7 @@ conditional_columns_calculated_calculated = ['CPS_PoP_abs_conditional', 'CPS_PoP
 layout_birst_category =  html.Div([
 
 #    print_button(),
- 
+
     html.Div([
         # CC Header
         Header(),
@@ -100,27 +100,27 @@ layout_birst_category =  html.Div([
                 id='datatable-birst-category',
                 columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns],
                 editable=True,
-                n_fixed_columns=2,
                 style_table={'maxWidth': '1500px'},
                 row_selectable="multi",
                 selected_rows=[0],
+                filter_action = "custom",
                 style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
                 css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-                style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]  
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]]
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
+                style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
                       + [{'if': {'column_id': c},'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF' } for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)','CPA PoP (%)', 'CPA YoY (%)' ]]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c},'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866' } for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
-                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', 'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 
-                      'Sessions YoY (%)', 'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', 'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]] 
+                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', 'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent',
+                      'Sessions_YoY_Percent', 'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', 'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]]
                 ),
             ], className=" twelve columns"),
         # Download Button
@@ -133,12 +133,12 @@ layout_birst_category =  html.Div([
               id='datatable-birst-category-2',
               columns=[{"name": i, "id": i} for i in df_columns_calculated],
               editable=True,
-              n_fixed_columns=1,
               style_table={'maxWidth': '1500px'},
+              filter_action = "custom",
                   # sorting=True,
                   # sorting_type="multi",
                    style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-                   style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                   style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
                     + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
@@ -201,27 +201,27 @@ layout_ga_category =  html.Div([
                 id='datatable-ga-category',
                 columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns],
                 editable=True,
-                n_fixed_columns=2,
                 style_table={'maxWidth': '1500px'},
                 row_selectable="multi",
                 selected_rows=[0],
                 style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
+                filter_action = "custom",
                 css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-                style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]  
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]]
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
+                style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
                       + [{'if': {'column_id': c},'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF' } for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)','CPA PoP (%)', 'CPA YoY (%)' ]]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c},'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866' } for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
-                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', 'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 
-                      'Sessions YoY (%)', 'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', 'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
+                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', 'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent',
+                      'Sessions_YoY_Percent', 'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', 'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
                 ),
             ], className=" twelve columns"),
         # Download Button
@@ -234,12 +234,12 @@ layout_ga_category =  html.Div([
               id='datatable-ga-category-2',
               columns=[{"name": i, "id": i} for i in df_columns_calculated],
               editable=True,
-              n_fixed_columns=1,
               style_table={'maxWidth': '1500px'},
+              filter_action = "custom",
                   # sorting=True,
                   # sorting_type="multi",
                    style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-                   style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                   style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
                     + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
@@ -299,43 +299,49 @@ layout_paid_search =  html.Div([
         html.Div([
             dash_table.DataTable(
                 id='datatable-paid-search',
-                columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns] 
-                + [{"name": j, "id": j, 'hidden': 'True'} for j in conditional_columns], 
+                columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns]
+                + [{"name": j, "id": j} for j in conditional_columns],
                 editable=True,
-                n_fixed_columns=2,
-                style_table={'maxWidth': '1500px'},
+                style_table={'maxWidth': '1500px', 'overflowX': 'scroll'},
                 row_selectable="multi",
                 selected_rows=[0],
-                style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
+                filter_action = "custom",
+                style_cell = {
+                    "fontFamily": "Arial",
+                    "size": 10,
+                    'textAlign': 'left',
+                    'overflow': 'hidden',
+                    'textOverflow': 'ellipsis',
+                    'maxWidth': 150,},
                 css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-                style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]  
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]]
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
+                style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
                       + [{'if': {'column_id': c},'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF' } for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)','CPA PoP (%)', 'CPA YoY (%)' ]]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c},'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866' } for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
-                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', 'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 
-                      'Sessions YoY (%)', 'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', 'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]]
-                      + [{'if': {'column_id': 'Spend PoP (Abs)', 'filter': 'Spend_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Spend PoP (%)', 'filter': 'Spend_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Spend YoY (%)', 'filter': 'Spend_YoY_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Sessions PoP (%)', 'filter': 'Sessions_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Sessions YoY (%)', 'filter': 'Sessions_YoY_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Bookings PoP (Abs)', 'filter': 'Bookings_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Bookings YoY (Abs)', 'filter': 'Bookings_YoY_abs_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Bookings PoP (%)', 'filter': 'Bookings_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Bookings YoY (%)', 'filter': 'Bookings_YoY_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Revenue PoP (Abs)', 'filter': 'Revenue_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Revenue YoY (Abs)', 'filter': 'Revenue_YoY_abs_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Revenue PoP (%)', 'filter': 'Revenue_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                      + [{'if': {'column_id': 'Revenue YoY (%)', 'filter': 'Revenue_YoY_percent_conditional < num(0)'}, 'color': 'red'}],
+                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', 'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent',
+                      'Sessions_YoY_Percent', 'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', 'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]]
+                      + [{'if': {'column_id': 'Spend PoP (Abs)', 'filter_query': 'Spend_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Spend_PoP_Percent', 'filter_query': 'Spend_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Spend_YoY_Percent', 'filter_query': 'Spend_YoY_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Sessions_PoP_Percent', 'filter_query': 'Sessions_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Sessions_YoY_Percent', 'filter_query': 'Sessions_YoY_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Bookings PoP (Abs)', 'filter_query': 'Bookings_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Bookings YoY (Abs)', 'filter_query': 'Bookings_YoY_abs_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Bookings_PoP_Percent', 'filter_query': 'Bookings_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Bookings_YoY_Percent', 'filter_query': 'Bookings_YoY_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Revenue PoP (Abs)', 'filter_query': 'Revenue_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Revenue YoY (Abs)', 'filter_query': 'Revenue_YoY_abs_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Revenue PoP (%)', 'filter_query': 'Revenue_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                      + [{'if': {'column_id': 'Revenue YoY (%)', 'filter_query': 'Revenue_YoY_percent_conditional < 0'}, 'color': 'red'}],
                       style_header={'backgroundColor': 'black','color': 'white'},
                 ),
             ], className=" twelve columns"),
@@ -347,14 +353,14 @@ layout_paid_search =  html.Div([
         html.Div([
             dash_table.DataTable(
               id='datatable-paid-search-2',
-              columns=[{"name": i, "id": i} for i in df_columns_calculated] + 
-              [{"name": k, "id": k, 'hidden': 'True'} for k in conditional_columns_calculated_calculated],
+              columns=[{"name": i, "id": i} for i in df_columns_calculated] +
+              [{"name": k, "id": k} for k in conditional_columns_calculated_calculated],
               editable=True,
-              n_fixed_columns=1,
               css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
               style_table={'maxWidth': '1500px'},
               style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-              style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+              filter_action = "custom",
+              style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
                 + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                 + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                 + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
@@ -362,20 +368,20 @@ layout_paid_search =  html.Div([
                 + [{'if': {'column_id': c},  'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
                 + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
                 + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', 'CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)', 'CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
-                + [{'if': {'column_id': 'CPS PoP (Abs)', 'filter': 'CPS_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS_PoP_abs_conditional', 'filter': 'CPS_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS PoP (%)', 'filter': 'CPS_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS YoY (Abs)', 'filter': 'CPS_YoY_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS YoY (%)', 'filter': 'CPS_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CVR PoP (Abs)', 'filter': 'CVR_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CVR PoP (%)', 'filter': 'CVR_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id':  'CVR YoY (Abs)', 'filter': 'CVR_YoY_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CVR YoY (%)', 'filter': 'CVR_YoY_percent_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA PoP (Abs)', 'filter': 'CPA_PoP_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA PoP (%)', 'filter': 'CPA_PoP_percent_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA YoY (Abs)', 'filter': 'CPA_YoY_abs_conditional < num(0)'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA YoY (%)', 'filter': 'CPA_YoY_percent_conditional < num(0)'}, 'color': 'red'}],
-                style_header={'backgroundColor': 'black','color': 'white'},       
+                + [{'if': {'column_id': 'CPS PoP (Abs)', 'filter_query': 'CPS_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPS_PoP_abs_conditional', 'filter_query': 'CPS_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPS PoP (%)', 'filter_query': 'CPS_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPS YoY (Abs)', 'filter_query': 'CPS_YoY_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPS YoY (%)', 'filter_query': 'CPS_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CVR PoP (Abs)', 'filter_query': 'CVR_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CVR PoP (%)', 'filter_query': 'CVR_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id':  'CVR YoY (Abs)', 'filter_query': 'CVR_YoY_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CVR YoY (%)', 'filter_query': 'CVR_YoY_percent_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPA PoP (Abs)', 'filter_query': 'CPA_PoP_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPA PoP (%)', 'filter_query': 'CPA_PoP_percent_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPA YoY (Abs)', 'filter_query': 'CPA_YoY_abs_conditional < 0'}, 'color': 'red'}]
+                + [{'if': {'column_id': 'CPA YoY (%)', 'filter_query': 'CPA_YoY_percent_conditional < 0'}, 'color': 'red'}],
+                style_header={'backgroundColor': 'black','color': 'white'},
                 ),
             ], className=" twelve columns"),
         # GRAPHS
@@ -428,27 +434,27 @@ layout_display =  html.Div([
                 id='datatable-display',
                 columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns],
                 editable=True,
-                n_fixed_columns=2,
                 style_table={'maxWidth': '1500px'},
                 row_selectable="multi",
                 selected_rows=[0],
                 style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
+                filter_action = "custom",
                 css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-                style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]  
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]]
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
+                style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
                       + [{'if': {'column_id': c},'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF' } for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)','CPA PoP (%)', 'CPA YoY (%)' ]]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c},'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866' } for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
-                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', 'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 
-                      'Sessions YoY (%)', 'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', 'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
+                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', 'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent',
+                      'Sessions_YoY_Percent', 'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', 'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
                 ),
             ], className=" twelve columns"),
         # Download Button
@@ -461,12 +467,12 @@ layout_display =  html.Div([
               id='datatable-display-2',
               columns=[{"name": i, "id": i} for i in df_columns_calculated],
               editable=True,
-              n_fixed_columns=1,
               style_table={'maxWidth': '1500px'},
                   # sorting=True,
                   # sorting_type="multi",
                    style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-                   style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                   filter_action = "custom",
+                   style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
                     + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
@@ -529,27 +535,27 @@ layout_publishing =  html.Div([
                 id='datatable-publishing',
                 columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns],
                 editable=True,
-                n_fixed_columns=2,
                 style_table={'maxWidth': '1500px'},
                 row_selectable="multi",
                 selected_rows=[0],
                 style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
+                filter_action = "custom",
                 css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-                style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]  
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]]
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
+                style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
                       + [{'if': {'column_id': c},'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF' } for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)','CPA PoP (%)', 'CPA YoY (%)' ]]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c},'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866' } for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
-                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', 'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 
-                      'Sessions YoY (%)', 'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', 'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
+                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', 'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent',
+                      'Sessions_YoY_Percent', 'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', 'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
                 ),
             ], className=" twelve columns"),
         # Download Button
@@ -562,12 +568,12 @@ layout_publishing =  html.Div([
               id='datatable-publishing-2',
               columns=[{"name": i, "id": i} for i in df_columns_calculated],
               editable=True,
-              n_fixed_columns=1,
               style_table={'maxWidth': '1500px'},
                   # sorting=True,
                   # sorting_type="multi",
                    style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-                   style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                   filter_action = "custom",
+                   style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
                     + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
@@ -630,27 +636,27 @@ layout_metasearch =  html.Div([
                 id='datatable-metasearch',
                 columns=[{"name": i, "id": i, 'deletable': True} for i in dt_columns],
                 editable=True,
-                n_fixed_columns=2,
-                style_table={'maxWidth': '1500px'},
+                style_table={'maxWidth': '1200px'},
                 row_selectable="multi",
                 selected_rows=[0],
+                filter_action = "custom",
                 style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
                 css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-                style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]  
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)',]] 
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]] 
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 'Sessions YoY (%)',]]
-                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
-                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)',]]
+                style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EAFAF1'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D5F5E3'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#FEF9E7'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FCF3CF'} for c in ['Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent', 'Sessions_YoY_Percent',]]
+                      + [{'if': {'column_id': c}, 'backgroundColor': '#EBF5FB'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
+                      + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#D6EAF8'} for c in ['Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',]]
                       + [{'if': {'column_id': c},'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF' } for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY',  'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                       + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)','CPA PoP (%)', 'CPA YoY (%)' ]]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8' } for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c},'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
                       + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866' } for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY',  'CPS YoY (Abs)', 'CPS PoP (%)', 'CPA YoY (%)']]
-                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend PoP (%)', 'Spend LY', 'Spend YoY (%)', 'Sessions - TY', 'Sessions - LP', 'Sessions - LY', 'Sessions PoP (%)', 
-                      'Sessions YoY (%)', 'Bookings - TY', 'Bookings - LP', 'Bookings PoP (%)', 'Bookings PoP (Abs)', 'Bookings - LY', 'Bookings YoY (%)', 'Bookings YoY (Abs)', 'Revenue - TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue - LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
+                      + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent', 'Sessions_TY', 'Sessions - LP', 'Sessions_LY', 'Sessions_PoP_Percent',
+                      'Sessions_YoY_Percent', 'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)', 'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',]],
                 ),
             ], className=" twelve columns"),
         # Download Button
@@ -663,12 +669,12 @@ layout_metasearch =  html.Div([
               id='datatable-metasearch-2',
               columns=[{"name": i, "id": i} for i in df_columns_calculated],
               editable=True,
-              n_fixed_columns=1,
-              style_table={'maxWidth': '1500px'},
+              style_table={'maxWidth': '1200px'},
+              filter_action = "custom",
                   # sorting=True,
                   # sorting_type="multi",
                    style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-                   style_cell_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                   style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
                     + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
                     + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
@@ -694,7 +700,7 @@ layout_metasearch =  html.Div([
 ######################## END Metasearch and Travel Ads Layout ########################
 
 ######################## 404 Page ########################
-noPage = html.Div([ 
+noPage = html.Div([
     # CC Header
     Header(),
     html.P(["404 Page not found"])

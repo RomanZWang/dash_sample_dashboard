@@ -13,12 +13,12 @@ import xlsxwriter
 from flask import send_file
 
 # see https://dash.plot.ly/external-resources to alter header, footer and favicon
-app.index_string = ''' 
+app.index_string = '''
 <!DOCTYPE html>
 <html>
     <head>
         {%metas%}
-        <title>Stark Performance Marketing Report</title>
+        <title>Firegem Demo</title>
         {%favicon%}
         {%css%}
     </head>
@@ -27,8 +27,9 @@ app.index_string = '''
         <footer>
             {%config%}
             {%scripts%}
+            {%renderer%}
         </footer>
-        <div>Stark Performance Marketing Report</div>
+        <div>Firegem Demo</div>
     </body>
 </html>
 '''
