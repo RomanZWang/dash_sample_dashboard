@@ -634,7 +634,7 @@ def to_string(filter):
         return filter.get('value')
 
 def construct_filter(derived_query_structure, complexOperator=None, df=df_global):
-    print(derived_query_structure)
+    # print(derived_query_structure)
     # there is no query; return an empty filter string and the
     # original dataframe
     if derived_query_structure is None:

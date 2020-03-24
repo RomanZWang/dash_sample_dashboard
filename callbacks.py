@@ -342,7 +342,7 @@ def update_data_1(start_date, end_date, derived_filter_query_structure):
 
     (pd_query_string, df_filtered) = construct_filter(derived_filter_query_structure, df=data_2)
 
-    print("Query String: %s" % pd_query_string)
+    # print("Query String: %s" % pd_query_string)
 
     if pd_query_string != '':
         df_filtered = data_2.query(pd_query_string)
