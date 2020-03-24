@@ -127,27 +127,27 @@ layout_birst_category =  html.Div([
         html.Div([
           html.A(html.Button('Download Data', id='download-button'), id='download-link-birst-category')
           ]),
-        # # Second Data Table
-        # html.Div([
-        #     dash_table.DataTable(
-        #       id='datatable-birst-category-2',
-        #       columns=[{"name": i, "id": i} for i in df_columns_calculated],
-        #       editable=True,
-        #       style_table={'maxWidth': '1500px'},
-        #       filter_action = "custom",
-        #           # sorting=True,
-        #           # sorting_type="multi",
-        #            style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-        #            style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
-        #             + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
-        #             + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
-        #             + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
-        #             + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
-        #             + [{'if': {'column_id': c},  'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
-        #             + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
-        #             + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', 'CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)', 'CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]],
-        #     ),
-        #     ], className=" twelve columns"),
+        # Second Data Table
+        html.Div([
+            dash_table.DataTable(
+              id='datatable-birst-category-2',
+              columns=[{"name": i, "id": i} for i in df_columns_calculated],
+              editable=True,
+              style_table={'maxWidth': '1500px'},
+              filter_action = "custom",
+                  # sorting=True,
+                  # sorting_type="multi",
+                   style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
+                   style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+                    + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
+                    + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
+                    + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
+                    + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
+                    + [{'if': {'column_id': c},  'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
+                    + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
+                    + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', 'CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)', 'CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]],
+            ),
+            ], className=" twelve columns"),
         # GRAPHS
         html.Div([
             html.Div(
@@ -350,40 +350,40 @@ layout_paid_search =  html.Div([
           html.A(html.Button('Download Data', id='download-button'), id='download-link-paid-search-1')
           ]),
         # Second Data Table
-        html.Div([
-            dash_table.DataTable(
-              id='datatable-paid-search-2',
-              columns=[{"name": i, "id": i} for i in df_columns_calculated] +
-              [{"name": k, "id": k} for k in conditional_columns_calculated_calculated],
-              editable=True,
-              css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-              style_table={'maxWidth': '1500px'},
-              style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
-              filter_action = "custom",
-              style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
-                + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
-                + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
-                + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
-                + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
-                + [{'if': {'column_id': c},  'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
-                + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
-                + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', 'CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)', 'CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
-                + [{'if': {'column_id': 'CPS PoP (Abs)', 'filter_query': 'CPS_PoP_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS_PoP_abs_conditional', 'filter_query': 'CPS_PoP_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS PoP (%)', 'filter_query': 'CPS_PoP_percent_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS YoY (Abs)', 'filter_query': 'CPS_YoY_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPS YoY (%)', 'filter_query': 'CPS_PoP_percent_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CVR PoP (Abs)', 'filter_query': 'CVR_PoP_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CVR PoP (%)', 'filter_query': 'CVR_PoP_percent_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id':  'CVR YoY (Abs)', 'filter_query': 'CVR_YoY_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CVR YoY (%)', 'filter_query': 'CVR_YoY_percent_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA PoP (Abs)', 'filter_query': 'CPA_PoP_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA PoP (%)', 'filter_query': 'CPA_PoP_percent_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA YoY (Abs)', 'filter_query': 'CPA_YoY_abs_conditional < 0'}, 'color': 'red'}]
-                + [{'if': {'column_id': 'CPA YoY (%)', 'filter_query': 'CPA_YoY_percent_conditional < 0'}, 'color': 'red'}],
-                style_header={'backgroundColor': 'black','color': 'white'},
-                ),
-            ], className=" twelve columns"),
+        # html.Div([
+        #     dash_table.DataTable(
+        #       id='datatable-paid-search-2',
+        #       columns=[{"name": i, "id": i} for i in df_columns_calculated] +
+        #       [{"name": k, "id": k} for k in conditional_columns_calculated_calculated],
+        #       editable=True,
+        #       css=[{'selector': '.dash-cell div.dash-cell-value', 'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
+        #       style_table={'maxWidth': '1500px'},
+        #       style_cell = {"fontFamily": "Arial", "size": 10, 'textAlign': 'left'},
+        #       filter_action = "custom",
+        #       style_data_conditional=[{'if': {'row_index': 'odd'}, 'backgroundColor': '#D5DBDB'}]
+        #         + [{'if': {'column_id': c},  'backgroundColor': '#F4ECF7'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
+        #         + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E8DAEF'} for c in ['CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)']]
+        #         + [{'if': {'column_id': c}, 'backgroundColor': '#FDEDEC'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
+        #         + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#FADBD8'} for c in ['CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
+        #         + [{'if': {'column_id': c},  'backgroundColor': '#F6DDCC'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
+        #         + [{'if': {'column_id': c, 'row_index': 'odd'}, 'backgroundColor': '#E59866'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', ]]
+        #         + [{'if': {'column_id': c}, 'minWidth': '0px', 'maxWidth': '80px', 'whiteSpace': 'normal'} for c in ['CPS - TY', 'CPS - LP', 'CPS PoP (Abs)', 'CPS - LY', 'CPS YoY (Abs)', 'CPS PoP (%)', 'CPS YoY (%)', 'CVR - TY', 'CVR - LP', 'CVR PoP (Abs)','CVR - LY', 'CVR YoY (Abs)', 'CVR PoP (%)', 'CVR YoY (%)', 'CPA - TY', 'CPA - LP', 'CPA PoP (Abs)', 'CPA - LY', 'CPA YoY (Abs)', 'CPA PoP (%)', 'CPA YoY (%)' ]]
+        #         + [{'if': {'column_id': 'CPS PoP (Abs)', 'filter_query': 'CPS_PoP_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPS_PoP_abs_conditional', 'filter_query': 'CPS_PoP_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPS PoP (%)', 'filter_query': 'CPS_PoP_percent_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPS YoY (Abs)', 'filter_query': 'CPS_YoY_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPS YoY (%)', 'filter_query': 'CPS_PoP_percent_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CVR PoP (Abs)', 'filter_query': 'CVR_PoP_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CVR PoP (%)', 'filter_query': 'CVR_PoP_percent_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id':  'CVR YoY (Abs)', 'filter_query': 'CVR_YoY_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CVR YoY (%)', 'filter_query': 'CVR_YoY_percent_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPA PoP (Abs)', 'filter_query': 'CPA_PoP_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPA PoP (%)', 'filter_query': 'CPA_PoP_percent_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPA YoY (Abs)', 'filter_query': 'CPA_YoY_abs_conditional < 0'}, 'color': 'red'}]
+        #         + [{'if': {'column_id': 'CPA YoY (%)', 'filter_query': 'CPA_YoY_percent_conditional < 0'}, 'color': 'red'}],
+        #         style_header={'backgroundColor': 'black','color': 'white'},
+        #         ),
+        #     ], className=" twelve columns"),
         # GRAPHS
         html.Div([
             html.Div([
