@@ -667,8 +667,8 @@ def construct_filter(derived_query_structure, complexOperator=None, df=df_global
     # 'datestartswith' and 'contains' can't be used within a pandas
     # filter string, so we have to do this filtering ourselves
     if complexOperator is not None and not isinstance(complexOperator, pd.DataFrame):
-        print("REACHED INSIDE LEAF NIBBA")
-        print(complexOperator)
+        # print("REACHED INSIDE LEAF NIBBA")
+        # print(complexOperator)
         right_query = right.get('value')
         # perform the filtering to generate a new dataframe
         if complexOperator == 'datestartswith':
