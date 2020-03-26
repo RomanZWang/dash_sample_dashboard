@@ -69,6 +69,152 @@ dt_columns_total = ['Placement type', 'Spend_TY', 'Spend - LP', 'Spend PoP (Abs)
 'Bookings_PoP_abs_conditional', 'Bookings_YoY_abs_conditional', 'Bookings_PoP_percent_conditional', 'Bookings_YoY_percent_conditional',
 'Revenue_PoP_abs_conditional', 'Revenue_YoY_abs_conditional', 'Revenue_PoP_percent_conditional', 'Revenue_YoY_percent_conditional',]
 
+######################## Firegem Search Callbacks ########################
+
+#### Date Picker Callback
+@app.callback(Output('output-container-date-picker-range-firegem', 'children'),
+    [Input('my-date-picker-range-firegem', 'start_date'),
+     Input('my-date-picker-range-firegem', 'end_date')])
+def update_output(start_date, end_date):
+    string_prefix = 'You have selected '
+    if start_date is not None:
+        # start_date = dt.strptime(start_date, '%Y-%m-%d')
+        start_date = parse(start_date)
+        start_date_string = start_date.strftime('%B %d, %Y')
+        string_prefix = string_prefix + 'a Start Date of ' + start_date_string + ' | '
+    if end_date is not None:
+        # end_date = dt.strptime(end_date, '%Y-%m-%d')
+        end_date = parse(end_date)
+        end_date_string = end_date.strftime('%B %d, %Y')
+        days_selected = (end_date - start_date).days
+        prior_start_date = start_date - timedelta(days_selected + 1)
+        prior_start_date_string = datetime.strftime(prior_start_date, '%B %d, %Y')
+        prior_end_date = end_date - timedelta(days_selected + 1)
+        prior_end_date_string = datetime.strftime(prior_end_date, '%B %d, %Y')
+        string_prefix = string_prefix + 'End Date of ' + end_date_string + ', for a total of ' + str(days_selected + 1) + ' Days. The prior period Start Date was ' + \
+        prior_start_date_string + ' | End Date: ' + prior_end_date_string + '.'
+    if len(string_prefix) == len('You have selected: '):
+        return 'Select a date to see it displayed here'
+    else:
+        return string_prefix
+
+# Callback and update first data table
+@app.callback(Output('datatable-firegem', 'data'),
+    [Input('my-date-picker-range-firegem', 'start_date'),
+     Input('my-date-picker-range-firegem', 'end_date'),
+     Input("datatable-firegem", "derived_filter_query_structure")])
+def update_data_1(start_date, end_date, derived_filter_query_structure):
+
+    # with open("/Users/roman/Work/business/JHU APL/dash_sample_dashboard/data/Output.txt", "w") as text_file:
+    #     text_file.write(data_2.to_string())
+
+    data_2 = update_first_datatable(start_date, end_date, 'Paid Search', 'Placement type')
+
+    # print("After first datatable update")
+    # print(data_2)
+
+    # print("DF 2")
+    # print(data_2)
+
+    (pd_query_string, df_filtered) = construct_filter(derived_filter_query_structure, df=data_2)
+
+    # print("Query String: %s" % pd_query_string)
+
+    if pd_query_string != '':
+        df_filtered = data_2.query(pd_query_string)
+
+
+    # print("DF Filtered")
+    # print(df_filtered)
+
+
+
+
+    # with open("Output.txt", "w") as text_file:
+    #     text_file.write(intermediate.to_string())
+
+    return df_filtered.to_dict("rows")
+
+# Callback and update data table columns
+@app.callback(Output('datatable-firegem', 'columns'),
+    [Input('radio-button-firegem', 'value')])
+def update_columns(value):
+    if value == 'Complete':
+        column_set=[{"name": i, "id": i, 'deletable': True} for i in columns_complete] + [{"name": j, "id": j} for j in conditional_columns]
+    elif value == 'Condensed':
+        column_set=[{"name": i, "id": i, "deletable": True} for i in columns_condensed]
+    return column_set
+
+# Callback for excel download
+@app.callback(
+    Output('download-link-firegem-1', 'href'),
+    [Input('my-date-picker-range-firegem', 'start_date'),
+     Input('my-date-picker-range-firegem', 'end_date')])
+def update_link(start_date, end_date):
+    s = parse(start_date)
+    e = parse(end_date)
+    return '/cc-travel-report/firegem/urlToDownload?value={}/{}'.format(s.strftime('%Y-%m-%d'),e.strftime('%Y-%m-%d'))
+@app.server.route("/cc-travel-report/firegem/urlToDownload")
+def download_excel_0():
+    value = flask.request.args.get('value')
+    #here is where I split the value
+    value = value.split('/')
+    start_date = value[0]
+    end_date = value[1]
+
+    filename = datestamp + '_firegem_search_' + start_date + '_to_' + end_date + '.xlsx'
+    # Dummy Dataframe
+    d = {'col1': [1, 2], 'col2': [3, 4]}
+    df = pd.DataFrame(data=d)
+
+    buf = io.BytesIO()
+    excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
+    download_1 = update_first_download(start_date, end_date, 'firegem Search', 'Placement type')
+    download_1.to_excel(excel_writer, sheet_name="sheet1", index=False)
+    # df.to_excel(excel_writer, sheet_name="sheet1", index=False)
+    excel_writer.save()
+    excel_data = buf.getvalue()
+    buf.seek(0)
+
+    return send_file(
+        buf,
+        mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        attachment_filename=filename,
+        as_attachment=True,
+        cache_timeout=0
+    )
+
+# Callback and update second data table
+@app.callback(
+    Output('datatable-firegem-2', 'data'),
+    [Input('my-date-picker-range-firegem', 'start_date'),
+     Input('my-date-picker-range-firegem', 'end_date'),
+     Input("datatable-firegem-2", "derived_filter_query_structure")])
+def update_data_2(start_date, end_date, derived_filter_query_structure):
+    data_2 = update_second_datatable(start_date, end_date, 'Paid Search', 'Placement type')
+    (pd_query_string, df_filtered) = construct_filter(derived_filter_query_structure, df=data_2)
+
+    if pd_query_string != '':
+        df_filtered = df_filtered.query(pd_query_string)
+
+    return df_filtered.to_dict("rows")
+
+# Callback for the Graphs
+@app.callback(
+   Output('firegem', 'figure'),
+   [Input('datatable-firegem', "selected_rows"),
+   Input('my-date-picker-range-firegem', 'end_date')])
+def update_firegem_search(selected_rows, end_date):
+    travel_product = []
+    travel_product_list = df[(df['Category'] == 'Paid Search')]['Placement type'].unique().tolist()
+    for i in selected_rows:
+        travel_product.append(travel_product_list[i])
+        # Filter by specific product
+    filtered_df = df[(df['Placement type'].isin(travel_product))].groupby(['Year', 'Week']).sum()[['Spend_TY', 'Spend_LY', 'Sessions_TY', 'Sessions_LY', 'Bookings_TY', 'Bookings_LY', 'Revenue_TY', 'Revenue_LY']].reset_index()
+    fig = update_graph(filtered_df, end_date)
+    return fig
+
+
 ######################## Birst Category Callbacks ########################
 
 #### Date Picker Callback
@@ -492,7 +638,7 @@ def update_columns(value):
     [Input('my-date-picker-range-display', 'start_date'),
      Input('my-date-picker-range-display', 'end_date')])
 def update_link(start_date, end_date):
-    return '/cc-travel-report/display/urlToDownload?value={}/{}'.format(dt.strptime(start_date,'%Y-%m-%d').strftime('%Y-%m-%d'),dt.strptime(end_date,'%Y-%m-%d').strftime('%Y-%m-%d'))
+    return '/cc-travel-report/display/urlToDownload?value={}/{}'.format(parse(start_date).strftime('%Y-%m-%d'),parse(end_date).strftime('%Y-%m-%d'))
 @app.server.route("/cc-travel-report/display/urlToDownload")
 def download_excel_display_1():
     value = flask.request.args.get('value')
@@ -776,27 +922,3 @@ def update_metasearch(selected_rows, end_date):
     filtered_df = df[(df['Placement type'].isin(travel_product))].groupby(['Year', 'Week']).sum()[['Spend_TY', 'Spend_LY', 'Sessions_TY', 'Sessions_LY', 'Bookings_TY', 'Bookings_LY', 'Revenue_TY', 'Revenue_LY']].reset_index()
     fig = update_graph(filtered_df, end_date)
     return fig
-
-# @app.callback(
-#     Output("datatable-metasearch", "data"),
-#     [Input("datatable-metasearch", "derived_filter_query_structure")]
-# )
-# def onFilterUpdate(derived_query_structure):
-#     (pd_query_string, df_filtered) = construct_filter(derived_query_structure, df)
-#
-#     if pd_query_string != '':
-#         df_filtered = df_filtered.query(pd_query_string)
-#
-#     return df_filtered.to_dict('rows')
-#
-# @app.callback(
-#     Output("datatable-metasearch-2", "data"),
-#     [Input("datatable-metasearch-2", "derived_filter_query_structure")]
-# )
-# def onFilterUpdate(derived_query_structure):
-#     (pd_query_string, df_filtered) = construct_filter(derived_query_structure, df)
-#
-#     if pd_query_string != '':
-#         df_filtered = df_filtered.query(pd_query_string)
-#
-#     return df_filtered.to_dict('rows')

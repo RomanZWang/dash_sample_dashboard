@@ -4,7 +4,7 @@ from dash.dependencies import Input, Output
 # see https://community.plot.ly/t/nolayoutexception-on-deployment-of-multi-page-dash-app-example-code/12463/2?u=dcomfort
 from app import server
 from app import app
-from layouts import layout_birst_category, layout_ga_category, layout_paid_search, noPage, layout_display, layout_publishing, layout_metasearch
+from layouts import layout_birst_category, layout_ga_category, layout_paid_search, noPage, layout_display, layout_publishing, layout_metasearch, layout_firegem
 import callbacks
 
 import pandas as pd
@@ -55,6 +55,8 @@ def display_page(pathname):
         return layout_publishing
     elif pathname == '/cc-travel-report/metasearch-and-travel-ads/':
         return layout_metasearch
+    elif pathname == '/':
+        return layout_firegem
     else:
         return noPage
 
@@ -71,6 +73,8 @@ external_css = ["https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normaliz
 for css in external_css:
     app.css.append_css({"external_url": css})
 
+# app.css.append_css()
+
 external_js = ["https://code.jquery.com/jquery-3.2.1.min.js",
                "https://codepen.io/bcd/pen/YaXojL.js"]
 
@@ -78,5 +82,4 @@ for js in external_js:
     app.scripts.append_script({"external_url": js})
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
-    app.css.config.serve_locally=False
+    app.run_server(debug=True)

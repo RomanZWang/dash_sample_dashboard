@@ -12,9 +12,10 @@ def Header():
 def get_logo():
     logo = html.Div([
 
-        html.Div([
-            html.Img(src='./assets/fgmodel.png', height='101', width='141')
-        ], className="ten columns padded"),
+        # html.Div(
+        # [
+        #     html.Img(src='./assets/fgmodel.png', height='101', width='141')
+        # ], className="ten columns padded"),
 
         # html.Div([
         #     dcc.Link('Full View   ', href='/cc-travel-report/full-view')
@@ -29,7 +30,7 @@ def get_header():
 
         html.Div([
             html.H5(
-                'Fire Mountain Gems Cost Report')
+                'Fire Gem Explorer Widget Demo')
         ], className="twelve columns padded")
 
     ], className="row gs-header gs-text-header")
@@ -50,6 +51,9 @@ def get_menu():
         dcc.Link('Publishing   ', href='/cc-travel-report/publishing/', className="tab"),
 
         dcc.Link('Metasearch and Travel Ads   ', href='/cc-travel-report/metasearch-and-travel-ads/', className="tab"),
+
+        dcc.Link('Flight hours vs RC Codes', href='/', className="tab"),
+
 
     ], className="row ")
     return menu

@@ -54,9 +54,119 @@ def formatter_number(x):
 
 
 # First Data Table Update Function
-def update_first_datatable(start_date, end_date, category, aggregation, df=df_global, formatting=False):
+def update_first_datatable_firegem(start_date, end_date, category, aggregation, df=df_global):
+
+    if start_date is not None:
+        # start_date = dt.strptime(start_date, '%Y-%m-%d')
+        start_date = parse(start_date)
+        start_date_string = start_date.strftime('%Y-%m-%d')
+    if end_date is not None:
+        # end_date = dt.strptime(end_date, '%Y-%m-%d')
+        end_date = parse(end_date)
+        end_date_string = end_date.strftime('%Y-%m-%d')
+    days_selected = (end_date - start_date).days
+
+    prior_start_date = start_date - timedelta(days_selected + 1)
+    prior_start_date_string = datetime.strftime(prior_start_date, '%Y-%m-%d')
+    prior_end_date = end_date - timedelta(days_selected + 1)
+    prior_end_date_string = datetime.strftime(prior_end_date, '%Y-%m-%d')
+
+    if aggregation == 'Placement type':
+
+        df1 = df[(df['Category'] == category)].groupby(['Date', aggregation]).sum()[columns].reset_index()
+        print("PRINT COLUMNS")
+        print(columns)
+        # print(df1['Date'])
+        # print(start_date)
+        # print(end_date)
+        # asd = df1[(df1['Date'] >= start_date_string) & (df1['Date'] <= end_date_string)]
+        # print(asd)
+        # asdf = asd.groupby([aggregation]).sum()
+        # print(asdf)
 
 
+        df_by_date = df1[(df1['Date'] >= start_date_string) & (df1['Date'] <= end_date_string)].groupby([aggregation]).sum()[columns].reset_index()
+        df_by_date_prior = df1[(df1['Date'] >= prior_start_date_string) & (df1['Date'] <= prior_end_date_string)].groupby([aggregation]).sum()[['Spend_TY', 'Sessions_TY', 'Bookings_TY', 'Revenue_TY']].reset_index()
+        df_by_date_prior.rename(columns={'Spend_TY' : 'Spend - LP', 'Sessions_TY' : 'Sessions - LP',  'Bookings_TY' : 'Bookings - LP','Revenue_TY' : 'Revenue - LP'}, inplace=True)
+        df_by_date_combined =  pd.merge(df_by_date, df_by_date_prior, on=[aggregation])
+    elif aggregation == 'GA Category':
+        df1 = df.groupby(['Date', aggregation]).sum()[columns].reset_index()
+        df_by_date = df1[(df1['Date'] >= start_date_string) & (df1['Date'] <= end_date_string)].groupby([aggregation]).sum()[columns].reset_index()
+        df_by_date_prior = df1[(df1['Date'] >= prior_start_date_string) & (df1['Date'] <= prior_end_date_string)].groupby([aggregation]).sum()[['Spend_TY', 'Sessions_TY', 'Bookings_TY', 'Revenue_TY']].reset_index()
+        df_by_date_prior.rename(columns={'Spend_TY' : 'Spend - LP', 'Sessions_TY' : 'Sessions - LP',  'Bookings_TY' : 'Bookings - LP','Revenue_TY' : 'Revenue - LP'}, inplace=True)
+        df_by_date_combined =  pd.merge(df_by_date, df_by_date_prior, on=[aggregation])
+        df_by_date_combined.rename(columns={'GA Category':'Placement type'}, inplace=True)
+    elif aggregation == 'Birst Category':
+        df1 = df.groupby(['Date', aggregation]).sum()[columns].reset_index()
+        df_by_date = df1[(df1['Date'] >= start_date_string) & (df1['Date'] <= end_date_string)].groupby([aggregation]).sum()[columns].reset_index()
+        df_by_date_prior = df1[(df1['Date'] >= prior_start_date_string) & (df1['Date'] <= prior_end_date_string)].groupby([aggregation]).sum()[['Spend_TY', 'Sessions_TY', 'Bookings_TY', 'Revenue_TY']].reset_index()
+        df_by_date_prior.rename(columns={'Spend_TY' : 'Spend - LP', 'Sessions_TY' : 'Sessions - LP',  'Bookings_TY' : 'Bookings - LP','Revenue_TY' : 'Revenue - LP'}, inplace=True)
+        df_by_date_combined =  pd.merge(df_by_date, df_by_date_prior, on=[aggregation])
+        df_by_date_combined.rename(columns={'Birst Category':'Placement type'}, inplace=True)
+
+    # Calculate Differences on-the-fly
+    df_by_date_combined['Spend_PoP_Percent'] = np.nan
+    df_by_date_combined['Spend_YoY_Percent'] = np.nan
+    df_by_date_combined['Sessions_PoP_Percent'] = np.nan
+    df_by_date_combined['Sessions_YoY_Percent'] = np.nan
+    df_by_date_combined['Bookings_PoP_Percent'] = np.nan
+    df_by_date_combined['Bookings_YoY_Percent'] = np.nan
+    df_by_date_combined['Revenue PoP (%)'] = np.nan
+    df_by_date_combined['Revenue YoY (%)'] = np.nan
+
+    df_by_date_combined['Spend_PoP_abs_conditional'] = df_by_date_combined['Spend PoP (Abs)'] = ((df_by_date_combined['Spend_TY'] - df_by_date_combined['Spend - LP']))
+
+    df_by_date_combined['Spend_PoP_percent_conditional'] = df_by_date_combined['Spend_PoP_Percent'] = np.where((df_by_date_combined['Spend_TY'] != 0) &  (df_by_date_combined['Spend - LP'] != 0),\
+        (((df_by_date_combined['Spend_TY'] - df_by_date_combined['Spend - LP'])/df_by_date_combined['Spend - LP']) * 100), df_by_date_combined['Spend_PoP_Percent'])
+
+    df_by_date_combined['Spend_YoY_percent_conditional'] = df_by_date_combined['Spend_YoY_Percent'] = np.where((df_by_date_combined['Spend_TY'] != 0) &  (df_by_date_combined['Spend_LY'] != 0),\
+        ((df_by_date_combined['Spend_TY'] - df_by_date_combined['Spend_LY'])/df_by_date_combined['Spend_LY']) * 100, df_by_date_combined['Spend_YoY_Percent'])
+
+
+    df_by_date_combined['Sessions_PoP_percent_conditional'] = df_by_date_combined['Sessions_PoP_Percent'] = np.where((df_by_date_combined['Sessions_TY'] != 0) &  (df_by_date_combined['Sessions - LP'] != 0),\
+        ((df_by_date_combined['Sessions_TY'] - df_by_date_combined['Sessions - LP'])/df_by_date_combined['Sessions - LP']) * 100, df_by_date_combined['Sessions_PoP_Percent'])
+
+    df_by_date_combined['Sessions_YoY_percent_conditional'] = df_by_date_combined['Sessions_YoY_Percent'] = np.where((df_by_date_combined['Sessions_TY'] != 0) &  (df_by_date_combined['Sessions_LY'] != 0),\
+        ((df_by_date_combined['Sessions_TY'] - df_by_date_combined['Sessions_LY'])/df_by_date_combined['Sessions_LY']) * 100, df_by_date_combined['Sessions_YoY_Percent'])
+
+
+    df_by_date_combined['Bookings_PoP_abs_conditional'] = df_by_date_combined['Bookings PoP (Abs)'] = (df_by_date_combined['Bookings_TY'] - df_by_date_combined['Bookings - LP'])
+
+    df_by_date_combined['Bookings_YoY_abs_conditional'] = df_by_date_combined['Bookings YoY (Abs)'] = (df_by_date_combined['Bookings_TY'] - df_by_date_combined['Bookings_LY'])
+
+    df_by_date_combined['Bookings_PoP_percent_conditional'] = df_by_date_combined['Bookings_PoP_Percent'] = np.where((df_by_date_combined['Bookings_TY'] != 0) &  (df_by_date_combined['Bookings - LP'] != 0),\
+        (df_by_date_combined['Bookings_TY'] - df_by_date_combined['Bookings - LP'])/df_by_date_combined['Bookings - LP'] * 100, df_by_date_combined['Bookings_PoP_Percent'])
+
+    df_by_date_combined['Bookings_YoY_percent_conditional'] = df_by_date_combined['Bookings_YoY_Percent'] = np.where((df_by_date_combined['Bookings_TY'] != 0) &  (df_by_date_combined['Bookings_LY'] != 0),\
+        (df_by_date_combined['Bookings_TY'] - df_by_date_combined['Bookings_LY'])/df_by_date_combined['Bookings_LY'] * 100, df_by_date_combined['Bookings_YoY_Percent'])
+
+
+    df_by_date_combined['Revenue_PoP_abs_conditional'] = df_by_date_combined['Revenue PoP (Abs)'] = (df_by_date_combined['Revenue_TY'] - df_by_date_combined['Revenue - LP'])
+
+    df_by_date_combined['Revenue_YoY_abs_conditional'] = df_by_date_combined['Revenue YoY (Abs)'] = (df_by_date_combined['Revenue_TY'] - df_by_date_combined['Revenue_LY'])
+
+    df_by_date_combined['Revenue_PoP_percent_conditional'] = df_by_date_combined['Revenue PoP (%)'] = np.where((df_by_date_combined['Revenue - LP'] != 0) &  (df_by_date_combined['Revenue - LP'] != 0),\
+        (df_by_date_combined['Revenue_TY'] - df_by_date_combined['Revenue - LP'])/df_by_date_combined['Revenue - LP'] * 100, df_by_date_combined['Revenue PoP (%)'])
+
+    df_by_date_combined['Revenue_YoY_percent_conditional'] = df_by_date_combined['Revenue YoY (%)'] = np.where((df_by_date_combined['Revenue_TY'] != 0) &  (df_by_date_combined['Revenue_LY'] != 0),\
+        (df_by_date_combined['Revenue_TY'] - df_by_date_combined['Revenue_LY'])/df_by_date_combined['Revenue_LY'] * 100, df_by_date_combined['Revenue YoY (%)'])
+
+    # Rearrange the columns
+    df_by_date_combined_dt = df_by_date_combined[[
+         'Placement type',
+         'Spend_TY', 'Spend - LP', 'Spend PoP (Abs)', 'Spend_PoP_Percent', 'Spend_LY', 'Spend_YoY_Percent',
+         'Sessions_TY', 'Sessions - LP', 'Sessions_PoP_Percent', 'Sessions_LY', 'Sessions_YoY_Percent',
+         'Bookings_TY', 'Bookings - LP', 'Bookings_PoP_Percent', 'Bookings PoP (Abs)', 'Bookings_LY', 'Bookings_YoY_Percent', 'Bookings YoY (Abs)',
+         'Revenue_TY', 'Revenue - LP', 'Revenue PoP (Abs)', 'Revenue PoP (%)', 'Revenue_LY', 'Revenue YoY (%)', 'Revenue YoY (Abs)',
+         # 'Spend_PoP_percent_conditional',
+         ]]
+
+    # data_df = df_by_date_combined.to_dict("rows")
+    data_df = df_by_date_combined_dt
+    return data_df
+
+# First Data Table Update Function
+def update_first_datatable(start_date, end_date, category, aggregation, df=df_global, use_firegem = True, formatting=False):
 
     if start_date is not None:
         # start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -77,10 +187,12 @@ def update_first_datatable(start_date, end_date, category, aggregation, df=df_gl
 
         df1 = df[(df['Category'] == category)].groupby(['Date', aggregation]).sum()[columns].reset_index()
 
-        # print(df1['Date'])
-        # print(start_date)
-        # print(end_date)
-        # asd = df1[(df1['Date'] >= start_date_string) & (df1['Date'] <= end_date_string)]
+        print(df1)
+        print(start_date)
+        print(end_date)
+        print(start_date_string)
+        print(end_date_string)
+        asd = df1[(df1['Date'] >= start_date_string) & (df1['Date'] <= end_date_string)]
         # print(asd)
         # asdf = asd.groupby([aggregation]).sum()
         # print(asdf)
